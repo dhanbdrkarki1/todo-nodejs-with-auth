@@ -1,0 +1,28 @@
+version: 0.0
+os: linux
+
+files:
+    - source: /
+      destination: /var/www/app2/
+file_exists_behavior: OVERWRITE
+
+permissions:
+  - object: /var/www/app2
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
+    type:
+      - file
+      - directory
+
+hooks:
+  BeforeInstall:
+    - location: scripts/cleanup.sh
+      timeout: 300
+      runas: root
+
+  AfterInstall:
+    - location: scripts/restart_servers.sh
+      timeout: 300
+      runas: root
