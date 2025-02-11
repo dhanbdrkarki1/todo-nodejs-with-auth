@@ -3,19 +3,14 @@ os: linux
 files:
   - source: .
     destination: /home/ec2-user/app
+
 hooks:
   ApplicationStop:
     - location: scripts/stop_container.sh
       timeout: 300
-      runas: root
-      env:
-        - REPOSITORY_URI: $(cat /home/ec2-user/app/env_vars | grep REPOSITORY_URI | cut -d '=' -f 2)
-        - IMAGE_TAG: $(cat /home/ec2-user/app/env_vars | grep IMAGE_TAG | cut -d '=' -f 2)
+      runas: ec2-user
 
   AfterInstall:
     - location: scripts/start_container.sh
       timeout: 300
-      runas: root
-      env:
-        - REPOSITORY_URI: $(cat /home/ec2-user/app/env_vars | grep REPOSITORY_URI | cut -d '=' -f 2)
-        - IMAGE_TAG: $(cat /home/ec2-user/app/env_vars | grep IMAGE_TAG | cut -d '=' -f 2)
+      runas: ec2-user
