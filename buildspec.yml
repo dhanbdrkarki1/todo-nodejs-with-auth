@@ -20,8 +20,13 @@ phases:
             - echo "Pushing the Docker images..."
             - docker push $REPOSITORY_URI:$IMAGE_TAG
             - echo Build completed on `date`
+            - echo "Writing environment variables to file..."
+            - echo "REPOSITORY_URI=$REPOSITORY_URI" > env_vars
+            - echo "IMAGE_TAG=$IMAGE_TAG" >> env_vars
+            - cat env_vars
 
 artifacts:
     files:
         - appspec.yml
         - scripts/**/*
+        - env_vars

@@ -1,9 +1,9 @@
 #!/bin/bash
-# Pull the latest Docker image
-echo "Pulling the latest Docker image..."
-docker pull $REPOSITORY_URI:latest
+# Pull the Docker image
+echo "Pulling Docker image..."
+docker pull $REPOSITORY_URI:$IMAGE_TAG
 
 # Run the Docker container
-echo "Starting the Docker container..."
-docker run -d -p 80:3000 --name todo-app $REPOSITORY_URI:latest
+echo "Starting Docker container..."
+docker run -d -p 3000:3000 --name todo-app $REPOSITORY_URI:$IMAGE_TAG
 echo "Container started."
