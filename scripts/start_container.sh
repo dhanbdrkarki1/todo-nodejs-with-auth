@@ -2,8 +2,8 @@
 set -e  # Exit on error
 
 # Load environment variables
-if [ -f /home/ec2-user/app/env_vars ]; then
-    source /home/ec2-user/app/env_vars
+if [ -f "/home/ec2-user/app/env_vars" ]; then
+    export $(grep -v '^#' /home/ec2-user/app/env_vars | xargs)
 else
     echo "Error: env_vars file not found!"
     exit 1
@@ -24,11 +24,11 @@ docker pull $REPOSITORY_URI:$IMAGE_TAG || { echo "Failed to pull Docker image"; 
 
 # Remove old container if running
 echo "Stopping existing container (if any)..."
-docker stop todo-app 2>/dev/null || true
-docker rm todo-app 2>/dev/null || true
+docker stop $CONTAINER_NAME 2>/dev/null || true
+docker rm $CONTAINER_NAME 2>/dev/null || true
 
 # Run the new container
 echo "Starting Docker container..."
-docker run -d -p 80:3000 --name todo-app $REPOSITORY_URI:$IMAGE_TAG || { echo "Failed to start container"; exit 1; }
+docker run -d -p 80:3000 --name $CONTAINER_NAME $REPOSITORY_URI:$IMAGE_TAG || { echo "Failed to start container"; exit 1; }
 
 echo "Container started successfully."
