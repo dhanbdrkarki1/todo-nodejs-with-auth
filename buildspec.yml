@@ -27,3 +27,4 @@ phases:
 artifacts:
     files:
         - imagedefinitions.json
+        - scripts/**/*  # Include the scripts folder and its contents
