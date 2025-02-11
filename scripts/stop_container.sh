@@ -9,12 +9,6 @@ else
     exit 1
 fi
 
-# Check if REPOSITORY_URI is set
-if [ -z "$REPOSITORY_URI" ]; then
-    echo "Error: REPOSITORY_URI environment variable is not set!"
-    exit 1
-fi
-
 echo "Stopping and removing existing containers..."
 echo "Repository URI: $REPOSITORY_URI"
 
