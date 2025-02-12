@@ -24,15 +24,10 @@ Using docker,
 
 ```bash
   docker build -t todo-app:latest -f Dockerfile .
-  docker run -d -p 80:3000 --name todo-app todo-app:latest
+  docker run -d -p 3000:3000 --name todo-app todo-app:latest
 ```
 
 Navigate to [`http://localhost:3000`](http://localhost:3000).
-
-## Tutorial
-
-Follow along with the step-by-step [Username & Password Tutorial](https://www.passportjs.org/tutorials/password/)
-to learn how this app was built.
 
 ## Overview
 
