@@ -18,14 +18,14 @@ fi
 echo "Using REPOSITORY_URI: $REPOSITORY_URI"
 echo "Using IMAGE_TAG: $IMAGE_TAG"
 
+# Authenticate Docker with ECR
+echo "Authenticating with ECR..."
+aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $REPOSITORY_URI
+
+
 # Pull the latest image from ECR
 echo "Pulling Docker image..."
 docker pull $REPOSITORY_URI:$IMAGE_TAG || { echo "Failed to pull Docker image"; exit 1; }
-
-# Remove old container if running
-echo "Stopping existing container (if any)..."
-docker stop $CONTAINER_NAME 2>/dev/null || true
-docker rm $CONTAINER_NAME 2>/dev/null || true
 
 # Run the new container
 echo "Starting Docker container..."
