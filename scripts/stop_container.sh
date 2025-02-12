@@ -10,24 +10,13 @@ else
 fi
 
 echo "Stopping and removing existing containers..."
-echo "Repository URI: $REPOSITORY_URI"
 
-# Stop running containers
-if docker ps -q --filter ancestor=$REPOSITORY_URI &>/dev/null; then
-    echo "Stopping containers..."
-    docker stop $(docker ps -q --filter ancestor=$REPOSITORY_URI)
-    echo "Containers stopped successfully"
-else
-    echo "No running containers found for $REPOSITORY_URI"
-fi
+# Stop containers using the container name (defined in CONTAINER_NAME env var)
+echo "Stopping containers..."
+docker ps -q --filter name="$CONTAINER_NAME" | xargs -r docker stop
 
 # Remove stopped containers
-if docker ps -a -q --filter ancestor=$REPOSITORY_URI &>/dev/null; then
-    echo "Removing containers..."
-    docker rm $(docker ps -a -q --filter ancestor=$REPOSITORY_URI)
-    echo "Containers removed successfully"
-else
-    echo "No containers to remove for $REPOSITORY_URI"
-fi
+echo "Removing stopped containers..."
+docker ps -aq --filter name="$CONTAINER_NAME" | xargs -r docker rm
 
 echo "Container cleanup completed."
